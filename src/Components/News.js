@@ -13,6 +13,7 @@ export default class News extends Component {
     pageSize: 9,
     category: 'general'
   }
+  
   static propTypes = {
     country: PropTypes.string,
     pageSize: PropTypes.number,
@@ -40,7 +41,7 @@ export default class News extends Component {
     let parsedData = await data.json();
     console.log(parsedData);
     this.setState({
-      articles: parsedData.articles,
+      articles: parsedData.articles || [], // Safeguard against undefined articles
       loading: false,
       page: page,
     });
@@ -75,7 +76,7 @@ export default class News extends Component {
             </div>
           })
           ) : (
-            <div>Loading...</div>
+            <div>No articles found</div> // Handle case when no articles are found
           ))}
           <div className="container d-flex justify-content-between">
             <button type="button" disabled={this.state.page <= 1} className="btn btn-dark" onClick={this.prevpage}>&larr; Previous</button>
